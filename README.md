@@ -1,10 +1,10 @@
-Sentinel Node Linked List Implementation in C++
+#Sentinel Node Linked List Implementation in C++
 
-Overview
+##Overview
 
 This project implements a doubly linked list using a sentinel node, enhancing safety and efficiency by eliminating null pointer references. By employing a special node (the sentinel node) to serve as both the head and tail boundaries, we avoid potential NullPointerExceptions that can occur in traditional linked list implementations.
 
-Key Features
+##Key Features
 
 Sentinel Node: Acts as a placeholder for both the head and tail, ensuring that the linked list is always connected, preventing null references.
 Doubly Linked List Structure: Each node maintains references to both its previous and next nodes, allowing for efficient traversal in both directions.
