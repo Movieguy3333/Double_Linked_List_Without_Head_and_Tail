@@ -1,0 +1,326 @@
+package WorkStation;
+
+
+import java.util.*;
+
+
+public class DListExtra <E> implements Iterable <E> {
+	
+
+	private static class Node <E> {
+		
+		public E data;
+		public Node <E> next;
+		public  Node <E> previous;
+		
+		
+	}
+	
+	
+// I kept track of size so that the method size()
+// will run in constant time O(1)
+	
+	
+	private int size = 0;
+	
+	Node <E>nil;
+	
+	DListExtra(){
+		
+		 nil = new Node <E>();
+		 nil.previous = nil;
+		 nil.next = nil;
+		 nil.data = null;
+		
+		
+		
+	}
+	
+	public void addFirst (E element) {
+		
+	
+		Node<E> newNode = new Node<E> ();
+		newNode.data = element;
+
+		
+		newNode.previous = nil;
+		newNode.next = nil.next;
+		
+		
+		nil.next.previous = newNode;
+		nil.next = newNode;
+		
+		size++;
+		
+		
+		
+	}
+	
+	public void addLast (E element) {
+		
+		Node<E> newNode = new Node<E> ();
+		newNode.data = element;
+		
+		newNode.previous = nil.previous;
+		newNode.next = nil;
+		
+		nil.previous.next = newNode;
+		nil.previous = newNode;
+		
+		size++;
+		
+		
+		
+		
+	}
+	
+	public E getFirst() {
+		
+		if (size <= 0)
+			throw new NoSuchElementException();
+		
+		return nil.next.data;
+		
+		
+	}
+	
+public E getLast() {
+	
+	if (size <= 0)
+		throw new NoSuchElementException();
+		
+		return nil.previous.data;
+		
+		
+	}
+	
+	public E removeFirst() {
+		
+		if (nil.next == nil)
+			throw new NoSuchElementException();
+		
+		
+		E temp = nil.next.data;
+		
+	
+	
+		
+		nil.next = nil.next.next;
+		nil.next.previous = nil;
+		
+		size--;
+		
+		
+		return temp;
+		
+	
+		
+	}
+	
+	public E removeLast() {
+		
+		if (nil.next == nil)
+			throw new NoSuchElementException();
+		
+		E temp = nil.previous.data;
+		
+		
+		nil.previous = nil.previous.previous;
+		nil.previous.next = nil;
+		
+		size--;
+		
+		return temp;
+		
+		
+		
+	}
+	
+	public E get (int index) throws IndexOutOfBoundsException {
+		
+		if (index < 0 || index >= size)
+			throw new IndexOutOfBoundsException();
+		
+		Node <E> currentNode = nil.next;
+		
+		int currentIndex = 0;
+		
+		while (currentIndex < index) {
+			currentNode = currentNode.next;
+			currentIndex++;
+		}
+		
+		return currentNode.data;
+			
+		
+		
+		
+		
+	}
+	
+public E set (int index, E value) throws IndexOutOfBoundsException {
+		
+		if (index < 0 || index >= size)
+			throw new IndexOutOfBoundsException();
+		
+	
+		
+		Node<E> currentNode = nil.next;
+		
+		int currentIndex = 0;
+		
+		while (currentIndex < index) {
+			currentNode = currentNode.next;
+			currentIndex++;
+		}
+		
+		E temp = currentNode.data;
+		currentNode.data = value;
+		return temp;
+			
+	
+		
+	}
+
+public int indexOf(Object obj) {
+	
+	
+
+	
+	Node <E>currentNode = nil.next;
+	
+	int currentIndex = 0;
+	
+	while (currentNode!=nil) {
+		if (currentNode.data.equals(obj))
+			return currentIndex;
+		currentNode = currentNode.next;
+		currentIndex++;
+	}
+	
+	return -1;
+	
+	
+	
+	
+	
+}
+
+public boolean contains (Object obj) {
+	
+	
+	
+	Node <E> currentNode = nil.next;
+	
+
+	
+	while (currentNode!=nil) {
+		
+		if (currentNode.data.equals(obj))
+			return true;
+		
+		currentNode = currentNode.next;
+	
+	}
+	
+	return false;
+	
+	
+	
+	
+}
+
+public boolean offer (E value) {
+	
+	Node <E> newNode = new Node <E> ();
+	newNode.data = value;
+	
+	newNode.previous = nil.previous;
+	newNode.next = nil;
+	
+	nil.previous.next = newNode;
+	nil.previous = newNode;
+	
+	size++;
+	
+	return true;
+	
+	
+	
+	
+	
+}
+
+public int size() {
+	return size;
+}
+
+public Iterator <E> iterator (){
+	
+	return new DListIterator();
+	
+	
+}
+
+
+	
+	public void printList () {
+		
+		Node <E> currentNode = nil.next;
+		
+		while (currentNode!= nil) {
+			
+			if (currentNode.next == nil)
+				System.out.println(currentNode.data);
+			else
+				System.out.print(currentNode.data + "=> ");
+			
+			currentNode = currentNode.next;
+		}
+		
+		System.out.println("Size: " + size);
+			
+		
+	}
+	
+	private class DListIterator implements Iterator <E> {
+		
+		
+		private Node <E> pointer;
+		
+		public DListIterator () {
+			
+			pointer = nil.next;
+			
+			
+		}
+		
+		
+		public boolean hasNext() {
+		return pointer.data!=null;
+		
+			
+			
+		}
+		
+		public E next() {
+			if (!hasNext())
+				throw new NoSuchElementException();
+			
+			E temp = pointer.data;
+			pointer = pointer.next;
+			return temp;
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
+
+}
